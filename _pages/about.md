@@ -10,16 +10,20 @@ profile:
   align:
   image: avatar.png
 
-news: true  # includes a list of news items
+news: false  # includes a list of news items
 selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true  # includes social icons at the bottom of the page
 ---
 
-Cristian recibio el titulo de ingeniero en electrónica y telecomunicaciones por la Universidad Técnica de Loja (Ecuador) en 2015, Master en Sistemas electrónicos (2019) y Master en Ingeniería de computadores y redes (2021) ambos por la Universidad Politécnica de Valencia (España).
+My interests are focused on solving computational problems and implementing artificial intelligence models in low power processors,
+always looking for new opportunities to build technology and contribute to the future.
 
-{% comment %}
-Co-fundador de iniciativas tecnológicas de impacto social, entre las cuales se destaca, [Mano Esperanza](/al-folio/projects/1_project/), la cual busca el desarrollo de dispositivos roboticos para personas con discapacidad de miembro superior. En 2016 junto a un grupo de amigos, fundo la startup de base tecnologica KEA electronics, dedicada al levantamiento de información mediante vehículos aéreos no tripulados, la cual ayudo al mapeo de zonas afectadas ṕor el terremoto en Manabi (Ecuador).
-{% endcomment %}
+Currently, I am part of the project **"Energy-Aware High-Performance Computing and Communications.
+Applications to Computational Deep Learning"** at the Polytechnic University of Valencia.
+I am working as a graduate researcher in the Parallel Architectures Group ([GAP](http://www.gap.upv.es/)),
+implementing artificial intelligence models in heterogeneous architectures under the supervision of 
+[Enrique Quintana](https://scholar.google.es/citations?user=YG8P9R8AAAAJ&hl=es)
+and [José Duato](https://rac.es/sobre-nosotros/miembros/academicos/numerarios/965/).
 
-
-En la actualidad, se desempeña como técnico superior de investigación, en la Universidad Politécnica de Valencia (España), en el proyecto Computación de altas prestaciones, consiente del consumo para redes neuronales.
+Before this, I studied a Master in Electronic Systems and Computer Engineering at the Polytechnic University of Valencia,
+working on the project "Food state detection using neural networks".
