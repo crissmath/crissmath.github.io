@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2022-07-13T10:35:30+00:00</updated><id>/feed.xml</id><title type="html">blank</title><subtitle>A simple website for personal projects.
+</subtitle><entry><title type="html">Matrix multiplication on RISC-V low-power processor</title><link href="/blog/2022/distill/" rel="alternate" type="text/html" title="Matrix multiplication on RISC-V low-power processor" /><published>2022-05-20T00:00:00+00:00</published><updated>2022-05-20T00:00:00+00:00</updated><id>/blog/2022/distill</id><content type="html" xml:base="/blog/2022/distill/"><![CDATA[<h2 id="full-text">Full Text</h2>
+
+<p><a href="https://link.springer.com/article/10.1007/s11227-022-04581-6">Link to <strong>paper</strong></a>.</p>
+
+<p><a href="/assets/pdf/poster.pdf">Link to <strong>poster</strong></a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@article{ramirez2022blis,
+  title={A BLIS-like matrix multiplication for machine learning in the RISC-V ISA-based GAP8 processor},
+  author={Ramírez, Cristian and Castellón, Adrián and Quintana-Ortí, Enrique S},
+  journal={The Journal of Supercomputing},
+  pages={1--10},
+  year={2022},
+  publisher={Springer}
+}
+</code></pre></div></div>
+<hr />
+
+<h2 id="introdución">Introdución</h2>
+
+<p>Las Redes Neuronales Covolucionales (CNNs) son modelos computacionales que requieren una cantidad elevada de cálculos, tanto en
+la etapa de entrenamiento como en la etapa de inferencia. Por esta razón, una de las técnicas más utilizadas para implementar
+las CNNs es reordenar las operaciones desde un punto de vista computacional como una multiplicación de matrices(Gemm).
+En este proyecto se realiza una implementación de la Gemm), enfocado a la convolución de Redes Neuronales, en uno de los cores
+RISC-V del procesador GAP8 de GreenWaves.</p>
+
+<p>Para esta implementación, nuestro enfoque aprovecha los algoritmos de BLIS (Basic Linear Algebra Instantiation Software)
+para desarrollar una implementación que :</p>
+
+<ol>
+  <li>Reorganiza el algoritmo Gemm adaptando su micro-kernel para explotar el producto escalar soportado por el hardware en el GAP8.</li>
+  <li>Orquesta explícitamente las transferencias de datos a través de la jerarquía de memorias scratchpad mediante DMA (acceso directo a memoria).</li>
+  <li>Opera con aritmética de enteros(int8).</li>
+</ol>
+
+<hr />
+
+<h2 id="importancia-de-la-multiplicación-de-matrices-en-machine-learning">Importancia de la Multiplicación de matrices en Machine Learning</h2>
+
+<p>La multiplicación general de matrices conocida en Inglés como GEMM(General Matrix Multiplication), es una de las  operaciones fundamentales que se presentan mas a menudo en las redes neuronales,
+es decir dentro de algunas de las capas mas conocidas encontramos que su funcionamiento esta basado en operaciones del tipo GEMM, AXPY o un DOT.</p>
+
+<p>Por enumerar algunas de las capas que contienen la GEMM tendriamos :</p>
+<ul>
+  <li>Fully-connected.</li>
+  <li>Recurrent-layers:
+    <ul>
+      <li>RNNs (Redes Neuronales Recursivas)</li>
+      <li>LSTMs(Long short-Term Memory)</li>
+      <li>GRUs(Gate recurrent Units)
+y por supuesto las conocidas Redes convolucionales .</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Como vemos casi todas :P. Si bien es cierto la multiplicación de matrices abarca un gran numero de algoritmos, iniciando por el algoritmo nativo(naive),
+hasta el presentado por  <a href="https://arxiv.org/pdf/2010.05846.pdf">Alman J, Williams</a> en 2020. Lo que se ha intentado en este articulo es comprender los algoritmos desde un punto computacional,
+y el rendimiento que este tiene al momento de ser implementado en diferentes arquitecturas.</p>
+
+<h3 id="definimos-que-es-la-gemm">Definimos que es la GEMM.</h3>
+
+<p>Como mencionamos antes,  La operación GEMM no es mas que el producto general de matrices, este se define matemáticamente como :</p>
+
+<p>$C = \alpha A \times B + \beta C$</p>
+
+<p>Donde :</p>
+<ul>
+  <li>A  y B : son matrices de entrada</li>
+  <li>alpha y beta : Como estradas escalares</li>
+  <li>C : la matriz donde vamos a escribir los resultados.</li>
+</ul>
+
+<p>Si ya nos estamos preguntando para que sirve alpha y beta, estas se incluyen en la mayoría de frameworks de algebra lineal
+y son dos entradas que nos permiten escalar los coeficientes de las matrices,
+alpha escala el producto de A*B y beta escala la matrix de salida.</p>
+
+<h3 id="modelo-computacional">Modelo computacional</h3>
+
+<p>Si damos un salto desde la parte teórica y abordamos los conceptos desde un punto computacional, debemos tomar en cuenta que estos conceptos llevan desarrollándose desde muchos años atrás,
+existiendo una gran cantidad de Librerías especializadas para este tipo de operaciones que son fundamentales en las ciencias de la computacion.
+Algunas de las Librerías de Algebra lineal mas utilizadas son OpenBLAS(Basic Linear Algebra Subprogramas), intel MKL(Math Kernel Library) y  CuBLAS de NVIDIA. En su mayoría estas librerías utilizan las siguientes convenciones :</p>
+
+<ul>
+  <li>$ A(m \times k)  $ : m : filas, k: columnas.</li>
+  <li>$ B(k \times n)  $ : k : filas, n: columnas.</li>
+  <li>$ C(m \times n)  $ : m : filas, n: columnas.</li>
+</ul>
+
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        <img class="img-fluid rounded z-depth-1" src="/assets/img/matrix_model.png" alt="" title="Multiplicacion de matrices modelo computacional" />
+    </div>
+</div>
+<div class="caption">
+    Multiplicación de matrices modelo computacional.
+</div>
+
+<hr />]]></content><author><name>cris</name></author><summary type="html"><![CDATA[In collaboration with Jie Lei and under supervision of Enrique Quintana y Adrián Castelló.]]></summary></entry><entry><title type="html">a post with math</title><link href="/blog/2015/math/" rel="alternate" type="text/html" title="a post with math" /><published>2015-10-20T15:12:00+00:00</published><updated>2015-10-20T15:12:00+00:00</updated><id>/blog/2015/math</id><content type="html" xml:base="/blog/2015/math/"><![CDATA[<p>This theme supports rendering beautiful math in inline and display modes using <a href="https://www.mathjax.org/" target="\_blank">MathJax 3</a> engine. You just need to surround your math expression with <code class="language-plaintext highlighter-rouge">$$</code>, like <code class="language-plaintext highlighter-rouge">$$ E = mc^2 $$</code>. If you leave it inside a paragraph, it will produce an inline expression, just like \(E = mc^2\).</p>
+
+<p>To use display mode, again surround your expression with <code class="language-plaintext highlighter-rouge">$$</code> and place it as a separate paragraph. Here is an example:</p>
+
+\[\sum_{k=1}^\infty |\langle x, e_k \rangle|^2 \leq \|x\|^2\]
+
+<p>You can also use <code class="language-plaintext highlighter-rouge">\begin{equation}...\end{equation}</code> instead of <code class="language-plaintext highlighter-rouge">$$</code> for display mode math.
+MathJax will automatically number equations:</p>
+
+<p>\begin{equation}
+\label{eq:caushy-shwarz}
+\left( \sum_{k=1}^n a_k b_k \right)^2 \leq \left( \sum_{k=1}^n a_k^2 \right) \left( \sum_{k=1}^n b_k^2 \right)
+\end{equation}</p>
+
+<p>and by adding <code class="language-plaintext highlighter-rouge">\label{...}</code> inside the equation environment, we can now refer to the equation using <code class="language-plaintext highlighter-rouge">\eqref</code>.</p>
+
+<p>Note that MathJax 3 is <a href="https://docs.mathjax.org/en/latest/upgrading/whats-new-3.0.html" target="\_blank">a major re-write of MathJax</a> that brought a significant improvement to the loading and rendering speed, which is now <a href="http://www.intmath.com/cg5/katex-mathjax-comparison.php" target="\_blank">on par with KaTeX</a>.</p>]]></content><author><name></name></author><summary type="html"><![CDATA[an example of a blog post with some math]]></summary></entry></feed>
