@@ -43,18 +43,17 @@ max_width: 800px
 # -----------------------------------------------------------------------------
 # Display links to the page with a preview object on social media.
 serve_og_meta: true # Include Open Graph meta tags in the HTML head
-og_image: # The site-wide (default for all links) Open Graph preview image
+og_image: true # The site-wide (default for all links) Open Graph preview image
 
 # -----------------------------------------------------------------------------
 # Social integration
 # -----------------------------------------------------------------------------
-
 github_username:  crissmath     # your GitHub user name
 gitlab_username: # your GitLab user name
 twitter_username: crissmath     # your Twitter handle
-linkedin_username: # your LinkedIn user name
+linkedin_username: cristian-r-6699184a # your LinkedIn user name
 scholar_userid:   _MluJ0cAAAAJ  # your Google Scholar ID
-orcid_id: # your ORCID ID
+orcid_id: 0000-0002-7047-950X # your ORCID ID
 medium_username: # your Medium username
 quora_username: # your Quora username
 publons_id: # your ID on Publons
@@ -66,9 +65,10 @@ wikidata_id: # your wikidata id
 dblp_url: # your DBLP profile url
 
 contact_note: >
-  If you need to contact me please write to the email.
+  I am open to research and industry opportunities in AI, embedded systems,
+  HPC, RISC-V, and machine learning engineering. Feel free to contact me by email.
 
-google_analytics: 2758253787 # out your google-analytics code
+google_analytics: G-9WVRPGYFQ7 # out your google-analytics code
 panelbear_analytics: XXXXXXXXX # panelbear analytics site ID
 
 # -----------------------------------------------------------------------------
@@ -160,7 +160,6 @@ scholar:
   source: /_bibliography/
   bibliography: papers.bib
   bibliography_template: bib
-
   replace_strings: true
   join_strings: true
 
@@ -173,19 +172,19 @@ scholar:
 # -----------------------------------------------------------------------------
 # Optional Features
 # -----------------------------------------------------------------------------
-
-enable_google_analytics:    true  # enables google analytic
+enable_google_analytics:    true   # enables google analytic
 enable_panelbear_analytics: false  # enables panelbear analytics
 enable_mansory:             true   # enables automatic project cards arangement
 enable_math:                true   # enables math typesetting (uses MathJax)
-enable_tooltips:            false  # enables automatic tooltip links generated
+enable_tooltips:            true   # enables automatic tooltip links generated
                                    # for each section titles on pages and posts
-enable_darkmode:            true   # enables switching between light/dark modes
-enable_navbar_social:       true  # enables displaying social links in the
+enable_darkmode:            false  # enables switching between light/dark modes
+enable_navbar_social:       true   # enables displaying social links in the
                                    # navbar on the about page
 enable_project_categories:  true   # enables categorization of projects into
                                    # multiple categories
 enable_medium_zoom:         true   # enables image zoom feature (as on medium.com)
+enable_publication_thumbnails: true
 
 # -----------------------------------------------------------------------------
 # Library versions
