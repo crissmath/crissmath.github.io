@@ -11,7 +11,7 @@
   Cristian Ramírez
 
 
-  | blog
+  | Teléfono Samsung como workstation Linux usando Termux
 
 </title>
 <meta name="description" content="Personal website of Cristian Ramírez, PhD in Computer Science, focused on AI, embedded systems, high-performance computing, RISC-V, machine learning, and applied research.
@@ -23,8 +23,8 @@
 " />
 <meta property="og:type" content="object" />
 <meta property="og:title" content="" />
-<meta property="og:url" content="https://www.crissmath.com/blog/index.html" />
-<meta property="og:description" content="blog" />
+<meta property="og:url" content="https://www.crissmath.com/blog/2024/math/" />
+<meta property="og:description" content="Teléfono Samsung como workstation Linux usando Termux" />
 <meta property="og:image" content="" />
 
 
@@ -45,7 +45,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💻</text></svg>">
 
 <link rel="stylesheet" href="/assets/css/main.css">
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/blog/2024/math/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -120,14 +120,10 @@
             <a class="nav-link" href="/blog/">
               blog
               
-              <span class="sr-only">(current)</span>
-              
             </a>
           </li>
           
           <!-- Other pages -->
-          
-          
           
           
           
@@ -170,32 +166,184 @@
     <!-- Content -->
 
     <div class="container mt-5">
-      <div class="post">
+      
 
-  <div class="header-bar">
-    <h1>crissmath-Blog</h1>
-    <h2>Tutorials, technical notes, and research updates.</h2>
-  </div>
+<div class="post">
 
+  <header class="post-header">
+    <h1 class="post-title">Teléfono Samsung como workstation Linux usando Termux</h1>
+    <p class="post-meta">October 20, 2024</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <h3><a class="post-title" href="/blog/2024/math/">Teléfono Samsung como workstation Linux usando Termux</a></h3>
-        <p class="post-meta">October 20, 2024</p>
-        <p>Convertir un teléfono Samsung en una workstation Linux portátil usando Termux</p>
-      </li>
-    
-      <li>
-        <h3><a class="post-title" href="/blog/2022/distill/">Matrix multiplication on RISC-V low-power processor</a></h3>
-        <p class="post-meta">May 20, 2022</p>
-        <p>In collaboration with Jie Lei and under supervision of Enrique Quintana y Adrián Castelló.</p>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+    <p>Los teléfonos Samsung modernos tienen suficiente potencia para ser usados como una
+<strong>workstation portátil</strong>. En este tutorial se muestra cómo configurar <strong>Termux</strong> en un
+dispositivo Samsung para usarlo como entorno Linux real: programación, cálculo científico
+y automatización, <strong>sin necesidad de root</strong>.</p>
+
+<hr />
+
+<h2 id="-dispositivo-utilizado">📱 Dispositivo utilizado</h2>
+<ul>
+  <li>Samsung Galaxy (serie S / S FE / Ultra)</li>
+  <li>Android 14 o superior</li>
+  <li>Arquitectura aarch64</li>
+</ul>
+
+<hr />
+
+<h2 id="️-accesorios-recomendados">⌨️ Accesorios recomendados</h2>
+<ul>
+  <li>Teclado físico USB-C o Bluetooth (layout English US)</li>
+  <li>Mouse (opcional)</li>
+  <li>Hub USB-C (opcional)</li>
+  <li>Monitor externo (opcional, usando Samsung DeX)</li>
+</ul>
+
+<hr />
+
+<h2 id="1️⃣-por-qué-usar-un-samsung-como-workstation">1️⃣ ¿Por qué usar un Samsung como workstation?</h2>
+<p>Samsung ofrece:</p>
+<ul>
+  <li>Hardware potente (CPU multinúcleo y RAM suficiente)</li>
+  <li>Excelente compatibilidad con teclado físico</li>
+  <li>Puerto USB-C estable</li>
+  <li>Modo Samsung DeX (opcional)</li>
+</ul>
+
+<p>Estas características permiten ejecutar un entorno Linux funcional usando Termux.</p>
+
+<hr />
+
+<h2 id="2️⃣-instalar-f-droid">2️⃣ Instalar F-Droid</h2>
+<p>Termux no debe instalarse desde Google Play.</p>
+
+<ol>
+  <li>Descargar F-Droid desde https://f-droid.org</li>
+  <li>Instalar el archivo APK</li>
+  <li>Abrir F-Droid y esperar la actualización de repositorios</li>
+</ol>
+
+<p><img src="/assets/img/fdroid-install.jpg" alt="Instalación de F-Droid" width="300" /></p>
+
+<hr />
+
+<h2 id="3️⃣-instalar-termux">3️⃣ Instalar Termux</h2>
+<ol>
+  <li>Buscar <strong>Termux</strong> dentro de F-Droid</li>
+  <li>Verificar que la fuente sea <strong>F-Droid Official</strong></li>
+  <li>Instalar la aplicación</li>
+  <li>Abrir Termux</li>
+</ol>
+
+<hr />
+
+<h2 id="4️⃣-configuración-inicial-y-repositorios">4️⃣ Configuración inicial y repositorios</h2>
+<p>Actualizar el sistema base de Termux:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pkg update
+pkg upgrade
+</code></pre></div></div>
+
+<p>Si aparece el error:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>no mirror or mirror group selected
+</code></pre></div></div>
+
+<p>Configurar los repositorios:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>termux-change-repo
+</code></pre></div></div>
+
+<p>Seleccionar:</p>
+<ul>
+  <li>Main repository</li>
+  <li>packages.termux.dev</li>
+</ul>
+
+<p>Luego actualizar nuevamente:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pkg update
+pkg upgrade
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="5️⃣-instalar-paquetes-esenciales">5️⃣ Instalar paquetes esenciales</h2>
+<p>Instalar herramientas básicas:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pkg <span class="nb">install </span>git curl wget nano vim unzip <span class="nb">tar </span>htop neofetch
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="6️⃣-acceso-al-almacenamiento-del-teléfono">6️⃣ Acceso al almacenamiento del teléfono</h2>
+<p>Permitir acceso a archivos del dispositivo:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>termux-setup-storage
+</code></pre></div></div>
+
+<p>Ruta disponible:</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>~/storage/shared
+</code></pre></div></div>
+
+<hr />
+
+<h2 id="7️⃣-configurar-teclado-físico-en-samsung">7️⃣ Configurar teclado físico en Samsung</h2>
+<p>Configurar desde Android:</p>
+
+<ul>
+  <li>Ajustes → Administración general</li>
+  <li>Idioma y entrada</li>
+  <li>Teclado físico</li>
+  <li>Seleccionar <strong>English (US)</strong></li>
+</ul>
+
+<hr />
+
+<h2 id="8️⃣-configuración-del-entorno-locale">8️⃣ Configuración del entorno (locale)</h2>
+<p>Configurar el entorno en inglés:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">LANG</span><span class="o">=</span>en_US.UTF-8
+<span class="nb">export </span><span class="nv">LC_ALL</span><span class="o">=</span>en_US.UTF-8
+</code></pre></div></div>
+
+<p>Para hacerlo permanente, añadir estas líneas a <code class="language-plaintext highlighter-rouge">~/.profile</code>.</p>
+
+<hr />
+
+<h2 id="9️⃣-verificación-del-sistema">9️⃣ Verificación del sistema</h2>
+<p>Comprobar la instalación:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>neofetch
+</code></pre></div></div>
+<p><img src="/assets/img/neofetch.PNG" alt="Instalación de F-Droid" width="400" /></p>
+
+<hr />
+
+<h2 id="-casos-de-uso-como-workstation">🔟 Casos de uso como workstation</h2>
+<p>Con esta configuración es posible:</p>
+
+<ul>
+  <li>Programar en Python, C o C++</li>
+  <li>Usar GNU Octave</li>
+  <li>Gestionar proyectos con Git</li>
+  <li>Conectarse a servidores vía SSH</li>
+  <li>Automatizar tareas en Linux</li>
+</ul>
+
+<hr />
+
+<h2 id="-conclusión">✅ Conclusión</h2>
+<p>Un teléfono Samsung moderno puede funcionar como una workstation Linux portátil utilizando
+Termux, ofreciendo un entorno que nos permite ejecutar codigo, probar algunas funciones de manera rapida. Aunque en mi caso personal yo lo uso puntualmente cuando no tengo a mano mi ordenador, es muy util si quieres conectarte de manera rapida po SSH a algun servidor en el cual necesites alguna configuracion rapida o a su vez ejecutar codigo remoto.</p>
+
+<p>Si bien no lo uso como estacion de trabajo principal, me ha salvado en muchas ocaciones en las que necesito trabajar y solo llevo encima el movil.</p>
+
+  </article>
 
   
-
 
 </div>
 
